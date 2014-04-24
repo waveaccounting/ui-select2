@@ -93,22 +93,22 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
           }, true);
           controller.$render = function () {
             if (isSelect) {
-              elm.select2('val', controller.$viewValue);
+              elm.waveselect2('val', controller.$viewValue);
             } else {
               if (opts.multiple) {
                 var viewValue = controller.$viewValue;
                 if (angular.isString(viewValue)) {
                   viewValue = viewValue.split(',');
                 }
-                elm.select2(
+                elm.waveselect2(
                   'data', convertToSelect2Model(viewValue));
               } else {
                 if (angular.isObject(controller.$viewValue)) {
-                  elm.select2('data', controller.$viewValue);
+                  elm.waveselect2('data', controller.$viewValue);
                 } else if (!controller.$viewValue) {
-                  elm.select2('data', null);
+                  elm.waveselect2('data', null);
                 } else {
-                  elm.select2('val', controller.$viewValue);
+                  elm.waveselect2('val', controller.$viewValue);
                 }
               }
             }
@@ -122,7 +122,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
               }
               // Delayed so that the options have time to be rendered
               $timeout(function () {
-                elm.select2('val', controller.$viewValue);
+                elm.waveselect2('val', controller.$viewValue);
                 // Refresh angular to remove the superfluous option
                 elm.trigger('change');
                 if(newVal && !oldVal && controller.$setPristine) {
@@ -155,7 +155,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
               }
               scope.$apply(function () {
                 controller.$setViewValue(
-                  convertToAngularModel(elm.select2('data')));
+                  convertToAngularModel(elm.waveselect2('data')));
               });
             });
 
@@ -177,31 +177,31 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
         }
 
         elm.bind("$destroy", function() {
-          elm.select2("destroy");
+          elm.waveselect2("destroy");
         });
 
         attrs.$observe('disabled', function (value) {
-          elm.select2('enable', !value);
+          elm.waveselect2('enable', !value);
         });
 
         attrs.$observe('readonly', function (value) {
           // Commented out due to a version conflict on our site
-          //elm.select2('readonly', !!value);
+          //elm.waveselect2('readonly', !!value);
         });
 
         if (attrs.ngMultiple) {
           scope.$watch(attrs.ngMultiple, function(newVal) {
             attrs.$set('multiple', !!newVal);
-            elm.select2(opts);
+            elm.waveselect2(opts);
           });
         }
 
         // Initialize the plugin late so that the injected DOM does not disrupt the template compiler
         $timeout(function () {
-          elm.select2(opts);
+          elm.waveselect2(opts);
 
           // Set initial value - I'm not sure about this but it seems to need to be there
-          elm.select2('data', controller.$modelValue);
+          elm.waveselect2('data', controller.$modelValue);
           // important!
           controller.$render();
 
@@ -209,7 +209,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
           if (!opts.initSelection && !isSelect) {
             var isPristine = controller.$pristine;
             controller.$setViewValue(
-              convertToAngularModel(elm.select2('data'))
+              convertToAngularModel(elm.waveselect2('data'))
             );
             if (isPristine) {
               controller.$setPristine();
