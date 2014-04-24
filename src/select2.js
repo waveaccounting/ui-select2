@@ -185,8 +185,8 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
         });
 
         attrs.$observe('readonly', function (value) {
-          alert("would've set readonly!");
-          elm.select2('readonly', !!value);
+          // Commented out due to a version conflict on our site
+          //elm.select2('readonly', !!value);
         });
 
         if (attrs.ngMultiple) {
